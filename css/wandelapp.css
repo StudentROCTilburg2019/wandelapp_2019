@@ -1,17 +1,18 @@
 html {
     font-family: Arial;
     font-size: 16px;
+    overflow-x: hidden;
 }
 body {
     line-height: 1.4em;
 }
- /*#accordion {*/
-     /*background-color: #eee;*/
-     /*width:100vw;*/
-     /*padding:1em;*/
-     /*position: absolute;*/
-     /*top: 100vh;*/
- /*}*/
+ #accordion {
+     background-color: #eee;
+     width:100vw;
+     padding:1em;
+     position: absolute;
+     top: 100vh;
+ }
 #accordion div {
     font-size:1.2em;
     line-height: 1.2em;
@@ -29,13 +30,12 @@ body {
 #upload {
     overflow-y: auto;
     transition: opacity .5s;
-    opacity: 1;
+    background-color: rgba(204, 0, 0, 0.3);
     box-sizing: border-box;
     position: absolute;
     bottom: 0;
-    height: 15vw;
-    width: 100vw;
-    background-color: #ddd;
+    height: 200px;
+    width: 100%;
     padding: 1em;
     z-index: 102;
 }
@@ -47,3 +47,20 @@ body {
      width:20px;
      height:20px;
  }
+ .inputfile+label{
+     font-size: 1.00em;
+     font-weight: 700;
+     color: white;
+     background-color: rgb(202, 60, 60);
+     display: inline-block;
+     padding: 10px;
+ }
+input[type="file"] {
+    width: 0.1px;
+    height: 0.1px;
+    opacity: 0;
+    overflow: hidden;
+    position: absolute;
+    z-index: -1;
+    display: none;
+}

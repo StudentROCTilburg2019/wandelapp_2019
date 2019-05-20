@@ -1,9 +1,69 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
     <meta charset=utf-8 />
     <title>Wandelapp</title>
-    <meta name='viewport' content='initial-scale=1,maximum-scale=1,user-scalable=no' />
+    <meta name='viewport' content='initial-scale=1'/>
+    <link rel="manifest" href="manifest.json">
+    <meta name="theme-color" content="#2196f3">
+
+    <noscript>
+        <!-- anchor linking to external file -->
+        <h1>No Script</h1>
+    </noscript>
+
+    <style>
+        .modal {
+            display: none; /* Hidden by default */
+            position: fixed; /* Stay in place */
+            z-index: 1; /* Sit on top */
+            padding-top: 100px; /* Location of the box */
+            left: 0;
+            top: 0;
+            width: 100%; /* Full width */
+            height: 100%; /* Full height */
+            overflow: auto; /* Enable scroll if needed */
+            background-color: rgb(0,0,0); /* Fallback color */
+            background-color: rgba(0,0,0,0.4); /* Black w/ opacity */
+        }
+
+        /* Modal Content */
+        .modal-content {
+            background-color: #fefefe;
+            text-align: center;
+            margin: auto;
+            padding: 20px;
+            border: 1px solid #888;
+            width: 40%;
+        }
+
+        /* The Close Button */
+        .close {
+            color: #aaaaaa;
+            float: right;
+            font-size: 28px;
+            font-weight: bold;
+        }
+
+        .close:hover,
+        .close:focus {
+            color: #000;
+            text-decoration: none;
+            cursor: pointer;
+        }
+        #okbutton{
+            width: 70px;
+            background-color: #4fa144;
+            color: white;
+        }
+        #okbutton:hover{
+            cursor: pointer;
+        }
+    </style>
+
+    <meta name="Description" content="Wandelapp 2019">
+
+    <script src="sw.js"></script>
 </head>
 <body>
 
@@ -27,8 +87,13 @@
 
         <!-- Info & upload -->
         <div id="upload">
-            <input on-change="uploadgpx" type="file" id="file-input" />
+            <input on-change="uploadgpx" type="file" id="file-input" aria-label="upload" />
             <div id="info"></div>
+        </div>
+
+        <div id="upload">
+            <input class="inputfile" type="file" id="file" name="file" value="">
+            <label for="file">Upoad GPX File</label>
         </div>
 
     </script>
@@ -36,8 +101,74 @@
     <!-- Ractive div/template -->
     <div id='container'></div>
 
+    <div id="myModal" class="modal">
+
+        <!-- Modal content -->
+        <div class="modal-content">
+            <div class="modal-header">
+                <span class="close">&times;</span>
+                <h1>Modal Popup</h1>
+            </div>
+            <div class="modal-body">
+                <p>popup met info hoe de app te gebruiken. Zoals Google dat doet</p>
+            </div>
+            <div class="modal-footer">
+                <div id="okbutton">ok, got it</div>
+            </div>
+        </div>
+
+    </div>
+
+    <script>
+        document.addEventListener("DOMContentLoaded", modalLoad);
+
+        // Get the modal
+        let modal = document.getElementById("myModal");
+
+        // Get the <span> element that closes the modal
+        let span = document.getElementsByClassName("close")[0];
+        let okbutton = document.getElementById("okbutton");
+
+        // When the user clicks the button, open the modal
+        function modalLoad() {
+            modal.style.display = "block";
+        };
+
+        // When the user clicks on <span> (x), close the modal
+        span.onclick = function() {
+            modal.style.display = "none";
+        };
+
+        okbutton.onclick = function() {
+            modal.style.display = "none";
+        };
+
+        // When the user clicks anywhere outside of the modal, close it
+        window.onclick = function(event) {
+            if (event.target === modal) {
+                modal.style.display = "none";
+            }
+        }
+    </script>
+
     <link rel="stylesheet" type="text/css" href="css/cssreset.css" />
     <link rel="stylesheet" type="text/css" href="css/wandelapp.css" />
     <script src='js/app_es5.js'></script>
+    <script>
+        document.addEventListener("DOMContentLoaded", function () {
+            if ('serviceWorker' in navigator) {
+                window.addEventListener('load', function () {
+                    navigator.serviceWorker.register('sw.js').then(function (registration) {
+                        // Registration was successful
+                        console.log('ServiceWorker registration successful with scope: ',
+                            registration.scope);
+                    }, function (err) {
+                        // registration failed :(
+                        console.log('ServiceWorker registration failed: ', err);
+                    });
+                });
+            }
+        });
+    </script>
 </body>
 </html>
